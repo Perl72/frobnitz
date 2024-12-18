@@ -1,0 +1,113 @@
+import sys
+import os
+import json
+import logging
+import traceback
+from datetime import datetime
+
+# Logger setup - Single Setup for Console and File Logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)  # Set to DEBUG to capture all logs
+
+# Console handler for logging
+console_handler = logging.StreamHandler(stream=sys.stderr)  # Send logs to stderr
+console_handler.setLevel(logging.INFO)
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+console_handler.setFormatter(formatter)
+logger.addHandler(console_handler)
+
+# File handler for logging
+log_file_path = "./logs/script.log"  # Define where logs will be stored
+os.makedirs(
+    os.path.dirname(log_file_path), exist_ok=True
+)  # Ensure the logs directory exists
+file_handler = logging.FileHandler(log_file_path)
+file_handler.setLevel(logging.DEBUG)  # Log all messages to the file
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+
+# Add `lib/python_utils` directory to Python path with an absolute path
+python_utils_path = "/app/lib/python_utils"
+sys.path.append(python_utils_path)
+
+# Debugging info
+current_dir = os.path.dirname(os.path.abspath(__file__))
+lib_path = os.path.join(current_dir, "../lib/python_utils")
+logger.debug(f"Adding lib_path to sys.path: {lib_path}")
+sys.path.append(lib_path)
+print("Python Path:", sys.path)
+print("Current Working Directory:", os.getcwd())  # FIXED: Replaced `sys.getcwd()` with `os.getcwd()`
+logger.debug(f"Python Path: {sys.path}")
+
+
+# Attempt to import watermarker2
+try:
+    from watermarker2 import add_watermark
+except ImportError as e:
+    logger.error("Error: Required module not found: %s", e)
+    sys.exit(1)
+
+# Load Config
+config_file = "./conf/app_config.json"
+
+try:
+    with open(config_file, "r") as file:
+        config = json.load(file)
+except FileNotFoundError:
+    logger.error(f"Error: Configuration file '{config_file}' not found.")
+    sys.exit(1)
+
+# Ensure output directory exists
+download_path = config.get("download_path", "/media/fritz/E4B0-3FC2/2024-12-12/")
+os.makedirs(download_path, exist_ok=True)
+
+# Extract watermark_config
+watermark_config = config.get("watermark_config", {})
+
+# Prepare parameters for watermarking
+params = {
+    "input_video_path": config.get(
+        "original_filename", "/media/fritz/E4B0-3FC2/2024-12-12/Rick_Astley_20091025.webm"
+    ),
+    "download_path": download_path,
+    "username": config.get("username", "DefaultUser"),
+    "video_date": datetime.now().strftime("%Y-%m-%d"),
+    "font": watermark_config.get("font", "Arial Bold"),
+    "font_size": watermark_config.get("font_size", 64),
+    "username_color": watermark_config.get("username_color", "yellow"),
+    "date_color": watermark_config.get("date_color", "cyan"),
+    "timestamp_color": watermark_config.get("timestamp_color", "red"),
+    "username_position": tuple(
+        watermark_config.get("username_position", ["left", "top"])
+    ),
+    "date_position": tuple(watermark_config.get("date_position", ["left", "bottom"])),
+    "timestamp_position": tuple(
+        watermark_config.get("timestamp_position", ["right", "bottom"])
+    ),
+    "shadow": watermark_config.get(
+        "shadow", {"color": "black", "offset": 5, "opacity": 0.6}
+    ),
+}
+
+# Call the watermarking function
+try:
+    logger.info("Starting watermarking process...")
+    # Breakpoint for debugging
+    logger.debug("Breakpoint: Parameters passed to add_watermark:")
+    for key, value in params.items():
+        logger.debug(f"{key}: {value}")
+
+    result = add_watermark(params)
+
+    if result and "to_process" in result:
+        logger.info(f"Watermarked video created: {result['to_process']}")
+        # Return the filename created
+        print(result["to_process"])
+    else:
+        logger.error("Watermarking failed or did not return a valid output.")
+
+except Exception as e:
+    logger.error(f"An error occurred during the watermarking process: {e}")
+    logger.debug(traceback.format_exc())
+    sys.exit(1)
+
