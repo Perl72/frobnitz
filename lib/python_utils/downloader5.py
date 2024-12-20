@@ -205,7 +205,7 @@ def create_original_filename(params):
         dict: A dictionary containing the original filename.
     """
     # Extract the required fields from params
-    download_path = params.get("download_path", "/Volumes/BallardTim/").replace(" ", "_")
+    download_path = params.get("download_path", "/Volumes/BallardTim/")
     video_uploader = params.get("uploader", "unknown_uploader")
     video_date = params.get("video_date", "unknown_date")
 

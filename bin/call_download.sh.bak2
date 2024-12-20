@@ -16,15 +16,6 @@ log_message() {
     echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOCAL_LOG_FILE"
 }
 
-# Check if a filename argument is provided
-if [ -z "$1" ]; then
-    log_message "Error: No filename provided. Please pass a valid filename as an argument."
-    exit 1
-fi
-
-INPUT_FILENAME="$1"
-log_message "Processing file: $INPUT_FILENAME"
-
 # Detect the operating system
 OS_TYPE=$(uname)
 log_message "Detected OS: $OS_TYPE"
@@ -33,6 +24,7 @@ log_message "Detected OS: $OS_TYPE"
 start_docker() {
     log_message "Ensuring Docker is running..."
     if [[ "$OS_TYPE" == "Linux" ]]; then
+        # Linux-specific logic
         if ! systemctl is-active --quiet docker; then
             log_message "Docker is not running. Starting Docker..."
             sudo systemctl start docker
@@ -44,6 +36,7 @@ start_docker() {
             log_message "Docker is already running."
         fi
     elif [[ "$OS_TYPE" == "Darwin" ]]; then
+        # macOS-specific logic
         if ! pgrep -f "Docker.app" >/dev/null; then
             log_message "Docker is not running. Attempting to start Docker..."
             open -a Docker
@@ -73,7 +66,7 @@ if [ ! -f "$Config_Path" ]; then
 fi
 
 # Parse config using jq
-usb_mount_name=$(jq -r '.target_usb_mount' "$Config_Path" | sed 's:/$::')
+usb_mount_name=$(jq -r '.target_usb_mount' "$Config_Path" | sed 's:/$::')  # Remove trailing slash if present
 log_message "Target USB mount name from config: $usb_mount_name"
 
 # Locate the USB volume dynamically
@@ -96,12 +89,12 @@ if [ ! -d "$usb_mount_point" ]; then
     exit 1
 fi
 
-# Create watermark directory
-watermark_date=$(date +%Y-%m-%d)
-watermark_path="$usb_mount_point/$watermark_date/"
-log_message "Attempting to create directory: $watermark_path"
-mkdir -p "$watermark_path" || { log_message "Error creating watermark directory: $watermark_path"; exit 1; }
-log_message "Directory created or already exists: $watermark_path"
+# Create download directory
+download_date=$(date +%Y-%m-%d)
+download_path="$usb_mount_point/$download_date/"
+log_message "Attempting to create directory: $download_path"
+mkdir -p "$download_path" || { log_message "Error creating download directory: $download_path"; exit 1; }
+log_message "Directory created or already exists: $download_path"
 
 # Check if the Docker image exists
 if [[ "$(docker images -q my_dl:latest 2> /dev/null)" == "" ]]; then
@@ -111,28 +104,31 @@ else
     log_message "Docker image 'my_dl:latest' found."
 fi
 
-# Run Docker to add the watermark
-log_message "Running Docker to add watermark..."
-watermarked_filename=$(docker run --rm \
+echo "DOCKER"
+# Run Docker to download the video
+log_message "Running Docker with the specified volume and config path..."
+original_filename=$(docker run --rm \
   -e PYTHONPATH="/app/lib/python_utils:/app/lib" \
   -v "$Config_Path":/app/conf/app_config.json \
   -v "$usb_mount_point":"$usb_mount_point" \
-  my_dl:latest python3 /app/bin/call_watermark.py "$INPUT_FILENAME" | tail -n 1)
+  my_dl python3 /app/bin/call_download.py "$1" 2>stderr.log | tail -n 1)
 
-# Remove trailing whitespace or newlines
-watermarked_filename=$(echo "$watermarked_filename" | sed 's/\s*$//')
+# Trim any extra whitespace or newlines
+original_filename=$(echo "$original_filename" | sed 's/^\s*//;s/\s*$//')
 
-# Sleep to allow for any file system updates
-sleep 1
+# Debug: Log outputs
+log_message "Captured Docker stdout: $original_filename"
+log_message "Captured Docker stderr: $(cat stderr.log)"
 
-# Validate the watermarked filename
-if [ -z "$watermarked_filename" ] || [[ "$watermarked_filename" == *"Error"* ]]; then
-  log_message "Error: watermarked_filename is not set or invalid."
+# Sleep to allow file system updates (if needed)
+sleep 3
+
+# Validate the original filename
+if [ -z "$original_filename" ] || [[ "$original_filename" == *"Error"* ]]; then
+  log_message "Error: original_filename is not set or invalid."
   exit 1
 fi
 
-# Log success
-log_message "File validation successful: $watermarked_filename"
-
-exit 0
+# Print only the filename as the final output
+echo "$original_filename"
 
