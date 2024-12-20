@@ -795,3 +795,192 @@ E4B0-3FC2/2024-12-18/Tim_Ballard_20241211.mp4
 2024-12-18 01:18:05 - Docker image 'my_dl:latest' found.
 2024-12-18 01:18:05 - Running Docker with the specified volume and config path...
 2024-12-18 01:18:30 - File validation successful: E4B0-3FC2/2024-12-18/Tim_Ballard_20241211.mp4
+2024-12-19 00:07:36 - Detected OS: Linux
+2024-12-19 00:07:36 - Ensuring Docker is running...
+2024-12-19 00:07:36 - Docker is already running.
+2024-12-19 00:07:36 - Loading configuration from /home/fritz/Desktop/Acme-Frobnitz-Snapshot/bin/../conf/app_config.json...
+2024-12-19 00:07:36 - Target USB mount name from config: E4B0-3FC2
+2024-12-19 00:07:36 - Detected USB mount point: /media/fritz/E4B0-3FC2
+2024-12-19 00:07:36 - Attempting to create directory: /media/fritz/E4B0-3FC2/2024-12-19/
+2024-12-19 00:07:36 - Directory created or already exists: /media/fritz/E4B0-3FC2/2024-12-19/
+2024-12-19 00:07:40 - Docker image 'my_dl:latest' found.
+2024-12-19 00:07:40 - Running Docker with the specified volume and config path...
+2024-12-19 00:09:10 - Detected OS: Linux
+2024-12-19 00:09:10 - Ensuring Docker is running...
+2024-12-19 00:09:12 - Docker is already running.
+2024-12-19 00:09:12 - Loading configuration from /home/fritz/Desktop/Acme-Frobnitz-Snapshot/bin/../conf/app_config.json...
+2024-12-19 00:09:12 - Target USB mount name from config: E4B0-3FC2
+2024-12-19 00:09:12 - Detected USB mount point: /media/fritz/E4B0-3FC2
+2024-12-19 00:09:12 - Attempting to create directory: /media/fritz/E4B0-3FC2/2024-12-19/
+2024-12-19 00:09:12 - Directory created or already exists: /media/fritz/E4B0-3FC2/2024-12-19/
+2024-12-19 00:09:20 - Docker image 'my_dl:latest' found.
+2024-12-19 00:09:20 - Running Docker with the specified volume and config path...
+2024-12-19 00:15:12 - Detected OS: Linux
+2024-12-19 00:15:12 - Ensuring Docker is running...
+2024-12-19 00:15:13 - Docker is already running.
+2024-12-19 00:15:13 - Loading configuration from /home/fritz/Desktop/Acme-Frobnitz-Snapshot/bin/../conf/app_config.json...
+2024-12-19 00:15:13 - Target USB mount name from config: E4B0-3FC2
+2024-12-19 00:15:13 - Detected USB mount point: /media/fritz/E4B0-3FC2
+2024-12-19 00:15:13 - Attempting to create directory: /media/fritz/E4B0-3FC2/2024-12-19/
+2024-12-19 00:15:13 - Directory created or already exists: /media/fritz/E4B0-3FC2/2024-12-19/
+2024-12-19 00:15:15 - Docker image 'my_dl:latest' found.
+2024-12-19 00:15:15 - Running Docker with the specified volume and config path...
+2024-12-19 01:14:01 - Detected OS: Linux
+2024-12-19 01:14:01 - Ensuring Docker is running...
+2024-12-19 01:14:01 - Docker is already running.
+2024-12-19 01:14:01 - Loading configuration from /home/fritz/Desktop/Acme-Frobnitz-Snapshot/bin/../conf/app_config.json...
+2024-12-19 01:14:02 - Target USB mount name from config: E4B0-3FC2
+2024-12-19 01:14:02 - Detected USB mount point: /media/fritz/E4B0-3FC2
+2024-12-19 01:14:02 - Attempting to create directory: /media/fritz/E4B0-3FC2/2024-12-19/
+2024-12-19 01:14:02 - Directory created or already exists: /media/fritz/E4B0-3FC2/2024-12-19/
+2024-12-19 01:14:05 - Docker image 'my_dl:latest' found.
+2024-12-19 01:14:05 - Running Docker with the specified volume and config path...
+2024-12-19 01:15:54 - Captured Docker stdout: E4B0-3FC2/2024-12-19/Tim_Ballard_20241211.mp4
+2024-12-19 01:15:55 - Captured Docker stderr: 2024-12-19 08:14:46,643 - __main__ - INFO - Attempting to create directory: E4B0-3FC2/2024-12-19/
+2024-12-19 08:14:46,660 - __main__ - INFO - Directory created or already exists: E4B0-3FC2/2024-12-19/
+2024-12-19 08:14:46,661 - __main__ - INFO - Entering function: mask_metadata
+2024-12-19 08:14:46,661 - downloader5 - INFO - Masking metadata
+2024-12-19 08:14:46,661 - downloader5 - INFO - Received parameters for metadata extraction:
+2024-12-19 08:14:46,661 - downloader5 - INFO - download_path: E4B0-3FC2/2024-12-19/
+2024-12-19 08:14:46,662 - downloader5 - INFO - cookie_path: None
+2024-12-19 08:14:46,662 - downloader5 - INFO - url: https://www.instagram.com/p/DDa_FxsNtTe/
+2024-12-19 08:14:46,662 - downloader5 - INFO - font: Arial Bold
+2024-12-19 08:14:46,662 - downloader5 - INFO - font_size: 64
+2024-12-19 08:14:46,662 - downloader5 - INFO - username_color: yellow
+2024-12-19 08:14:46,663 - downloader5 - INFO - date_color: cyan
+2024-12-19 08:14:46,663 - downloader5 - INFO - timestamp_color: red
+2024-12-19 08:14:46,663 - downloader5 - INFO - username_position: ['left', 'top']
+2024-12-19 08:14:46,663 - downloader5 - INFO - date_position: ['left', 'bottom']
+2024-12-19 08:14:46,664 - downloader5 - INFO - timestamp_position: ['right', 'bottom']
+2024-12-19 08:14:46,664 - downloader5 - INFO - overall_start: 2
+2024-12-19 08:14:46,664 - downloader5 - INFO - caption_top: 15%
+2024-12-19 08:14:46,664 - downloader5 - INFO - caption_bottom: 75%
+2024-12-19 08:14:46,664 - downloader5 - INFO - line_width: 8%
+2024-12-19 08:14:46,665 - downloader5 - INFO - hor_offset: 4%
+2024-12-19 08:14:46,665 - downloader5 - INFO - cap_length: 5
+2024-12-19 08:14:46,665 - downloader5 - INFO - max_number: 60
+2024-12-19 08:14:46,665 - downloader5 - INFO - max_char_width: 65
+2024-12-19 08:14:46,665 - downloader5 - INFO - next_line: 1.7
+2024-12-19 08:14:46,666 - downloader5 - INFO - pause_between_para: 2
+2024-12-19 08:14:46,666 - downloader5 - INFO - source_path: /app/data/4.source.txt
+2024-12-19 08:14:46,666 - downloader5 - INFO - shadow: {'color': 'black', 'offset': 5, 'opacity': 0.6}
+2024-12-19 08:15:03,478 - downloader5 - INFO - Extracted metadata:
+2024-12-19 08:15:03,480 - downloader5 - INFO - title: Video by timballard89
+2024-12-19 08:15:03,480 - downloader5 - INFO - upload_date: 20241211
+2024-12-19 08:15:03,481 - downloader5 - INFO - uploader: Tim Ballard
+2024-12-19 08:15:03,481 - downloader5 - INFO - duration: 176.425
+2024-12-19 08:15:03,481 - downloader5 - INFO - width: 1920
+2024-12-19 08:15:03,481 - downloader5 - INFO - height: 1080
+2024-12-19 08:15:03,482 - downloader5 - INFO - id: DDa_FxsNtTe
+2024-12-19 08:15:03,482 - downloader5 - INFO - ext: mp4
+2024-12-19 08:15:03,482 - downloader5 - INFO - resolution: 1920x1080
+2024-12-19 08:15:03,482 - downloader5 - INFO - fps: None
+2024-12-19 08:15:03,483 - downloader5 - INFO - tbr: 1846.004
+2024-12-19 08:15:03,483 - downloader5 - INFO - protocol: https+https
+2024-12-19 08:15:03,483 - downloader5 - INFO - vcodec: vp09.00.40.08.00.05.06.05.00
+2024-12-19 08:15:03,483 - downloader5 - INFO - vbr: 1792.098
+2024-12-19 08:15:03,483 - downloader5 - INFO - acodec: mp4a.40.5
+2024-12-19 08:15:03,484 - downloader5 - INFO - abr: 53.906
+2024-12-19 08:15:03,484 - downloader5 - INFO - asr: 44100
+2024-12-19 08:15:03,484 - downloader5 - INFO - Metadata masking complete
+2024-12-19 08:15:03,485 - __main__ - INFO - Entering function: create_original_filename
+2024-12-19 08:15:03,485 - downloader5 - INFO - Generated original filename: E4B0-3FC2/2024-12-19/Tim_Ballard_20241211.mp4
+2024-12-19 08:15:03,485 - __main__ - INFO - Entering function: download_video
+2024-12-19 08:15:03,486 - downloader5 - INFO - Received parameters: download_video:
+2024-12-19 08:15:03,486 - downloader5 - INFO - download_path: E4B0-3FC2/2024-12-19/
+2024-12-19 08:15:03,486 - downloader5 - INFO - cookie_path: None
+2024-12-19 08:15:03,486 - downloader5 - INFO - url: https://www.instagram.com/p/DDa_FxsNtTe/
+2024-12-19 08:15:03,486 - downloader5 - INFO - font: Arial Bold
+2024-12-19 08:15:03,487 - downloader5 - INFO - font_size: 64
+2024-12-19 08:15:03,487 - downloader5 - INFO - username_color: yellow
+2024-12-19 08:15:03,487 - downloader5 - INFO - date_color: cyan
+2024-12-19 08:15:03,487 - downloader5 - INFO - timestamp_color: red
+2024-12-19 08:15:03,488 - downloader5 - INFO - username_position: ['left', 'top']
+2024-12-19 08:15:03,488 - downloader5 - INFO - date_position: ['left', 'bottom']
+2024-12-19 08:15:03,488 - downloader5 - INFO - timestamp_position: ['right', 'bottom']
+2024-12-19 08:15:03,488 - downloader5 - INFO - overall_start: 2
+2024-12-19 08:15:03,488 - downloader5 - INFO - caption_top: 15%
+2024-12-19 08:15:03,489 - downloader5 - INFO - caption_bottom: 75%
+2024-12-19 08:15:03,489 - downloader5 - INFO - line_width: 8%
+2024-12-19 08:15:03,489 - downloader5 - INFO - hor_offset: 4%
+2024-12-19 08:15:03,489 - downloader5 - INFO - cap_length: 5
+2024-12-19 08:15:03,489 - downloader5 - INFO - max_number: 60
+2024-12-19 08:15:03,490 - downloader5 - INFO - max_char_width: 65
+2024-12-19 08:15:03,490 - downloader5 - INFO - next_line: 1.7
+2024-12-19 08:15:03,490 - downloader5 - INFO - pause_between_para: 2
+2024-12-19 08:15:03,490 - downloader5 - INFO - source_path: /app/data/4.source.txt
+2024-12-19 08:15:03,490 - downloader5 - INFO - shadow: {'color': 'black', 'offset': 5, 'opacity': 0.6}
+2024-12-19 08:15:03,491 - downloader5 - INFO - video_title: Video_by_timballard89
+2024-12-19 08:15:03,491 - downloader5 - INFO - video_date: 20241211
+2024-12-19 08:15:03,491 - downloader5 - INFO - uploader: Tim Ballard
+2024-12-19 08:15:03,491 - downloader5 - INFO - duration: 176.425
+2024-12-19 08:15:03,491 - downloader5 - INFO - width: 1920
+2024-12-19 08:15:03,492 - downloader5 - INFO - height: 1080
+2024-12-19 08:15:03,492 - downloader5 - INFO - id: DDa_FxsNtTe
+2024-12-19 08:15:03,492 - downloader5 - INFO - ext: mp4
+2024-12-19 08:15:03,492 - downloader5 - INFO - resolution: 1920x1080
+2024-12-19 08:15:03,493 - downloader5 - INFO - fps: None
+2024-12-19 08:15:03,493 - downloader5 - INFO - tbr: 1846.004
+2024-12-19 08:15:03,493 - downloader5 - INFO - protocol: https+https
+2024-12-19 08:15:03,493 - downloader5 - INFO - vcodec: vp09.00.40.08.00.05.06.05.00
+2024-12-19 08:15:03,493 - downloader5 - INFO - vbr: 1792.098
+2024-12-19 08:15:03,494 - downloader5 - INFO - acodec: mp4a.40.5
+2024-12-19 08:15:03,494 - downloader5 - INFO - abr: 53.906
+2024-12-19 08:15:03,494 - downloader5 - INFO - asr: 44100
+2024-12-19 08:15:03,494 - downloader5 - INFO - original_filename: E4B0-3FC2/2024-12-19/Tim_Ballard_20241211.mp4
+2024-12-19 08:15:03,495 - downloader5 - INFO - Starting download for URL: https://www.instagram.com/p/DDa_FxsNtTe/
+[debug] Encodings: locale UTF-8, fs utf-8, pref UTF-8, out utf-8 (No ANSI), error utf-8 (No ANSI), screen utf-8 (No ANSI)
+[debug] yt-dlp version stable@2024.12.03 from yt-dlp/yt-dlp [2b67ac300] (pip) API
+[debug] params: {'outtmpl': 'E4B0-3FC2/2024-12-19/Tim_Ballard_20241211.mp4', 'cookiefile': None, 'format': 'bestvideo+bestaudio/best', 'noplaylist': True, 'verbose': True, 'compat_opts': set(), 'http_headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Accept-Language': 'en-us,en;q=0.5', 'Sec-Fetch-Mode': 'navigate'}}
+[debug] Python 3.10.16 (CPython x86_64 64bit) - Linux-5.4.0-200-generic-x86_64-with-glibc2.36 (OpenSSL 3.0.15 3 Sep 2024, glibc 2.36)
+[debug] exe versions: ffmpeg 5.1.6-0 (setts), ffprobe 5.1.6-0
+[debug] Optional libraries: certifi-2024.12.14, requests-2.32.3, sqlite3-3.40.1, urllib3-2.2.3
+[debug] Proxy map: {}
+[debug] Request Handlers: urllib, requests
+[debug] Loaded 1837 extractors
+2024-12-19 08:15:07,003 - downloader5 - INFO - About to download video.
+[debug] Formats sorted by: hasvid, ie_pref, lang, quality, res, fps, hdr:12(7), vcodec, channels, acodec, size, br, asr, proto, vext, aext, hasaud, source, id
+[debug] Invoking http downloader on "https://scontent-sea1-1.cdninstagram.com/o1/v/t2/f2/m367/AQMGyZkUL2H6wWkRv0_OeFjPFX0EPwvO5_kKTtmQQ8XWBcnF-5wIGHa7mvIY5GekwlRSFMwqqz9orhQu62qkmP_b_1vqXqKuEMNMj4A6sg26.mp4?strext=1&_nc_cat=106&_nc_sid=9ca052&_nc_ht=scontent-sea1-1.cdninstagram.com&_nc_ohc=z3n1NB1R6NYQ7kNvgFvJ5yP&efg=eyJ2ZW5jb2RlX3RhZyI6ImlnLXhwdmRzLmNsaXBzLmMxLUMzLmRhc2hfcjJldmV2cDktcjFnZW4ydnA5X3E5MCIsInZpZGVvX2lkIjpudWxsLCJjbGllbnRfbmFtZSI6ImlnIiwib2lsX3VybGdlbl9hcHBfaWQiOjkzNjYxOTc0MzM5MjQ1OSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=9-4&oh=00_AYBRdJm8_ctRRq1qZE_AN9FpnHYSPGaXEITtt1wGLUEYoQ&oe=6769A47B"
+[debug] Invoking http downloader on "https://scontent-sea1-1.cdninstagram.com/o1/v/t16/f2/m69/AQMNw9EYNZY-dwhz1YLBY9fup_Ob7dRnFlhjR0JXmFps6KhRx_XZb6wyIw93qgfH8gxCiCZlYRKh-tEiIfw2hwsW.mp4?strext=1&_nc_cat=111&_nc_sid=9ca052&_nc_ht=scontent-sea1-1.cdninstagram.com&_nc_ohc=_CPLjxcmF48Q7kNvgHT-xuJ&efg=eyJ2ZW5jb2RlX3RhZyI6ImlnLXhwdmRzLmNsaXBzLmMxLUMzLmRhc2hfbG5faGVhYWNfdmJyM19hdWRpbyIsInZpZGVvX2lkIjpudWxsLCJjbGllbnRfbmFtZSI6ImlnIiwib2lsX3VybGdlbl9hcHBfaWQiOjkzNjYxOTc0MzM5MjQ1OSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=9-4&oh=00_AYAukEl_LW1-gmEwQ5igSucQORw1sAmYu-Ou12TGfzTnSg&oe=6769C040"
+[debug] ffmpeg command line: ffmpeg -y -loglevel repeat+info -i file:E4B0-3FC2/2024-12-19/Tim_Ballard_20241211.fdash-560108753314303v.mp4 -i file:E4B0-3FC2/2024-12-19/Tim_Ballard_20241211.fdash-1118756702933936ad.m4a -c copy -map 0:v:0 -map 1:a:0 -movflags +faststart file:E4B0-3FC2/2024-12-19/Tim_Ballard_20241211.temp.mp4
+2024-12-19 08:15:30,662 - downloader5 - INFO - Video download completed.
+2024-12-19 08:15:30,706 - downloader5 - INFO - Download completed in 27.21 seconds
+2024-12-19 08:15:30,707 - __main__ - INFO - Entering function: store_params_as_json
+2024-12-19 08:15:30,837 - utilities1 - INFO - Params saved to JSON file: E4B0-3FC2/2024-12-19/Tim_Ballard_20241211.json
+2024-12-19 08:15:30,837 - __main__ - INFO - Returning original filename: E4B0-3FC2/2024-12-19/Tim_Ballard_20241211.mp4
+2024-12-19 02:14:16 - Detected OS: Linux
+2024-12-19 02:14:16 - Ensuring Docker is running...
+2024-12-19 02:14:16 - Docker is already running.
+2024-12-19 02:14:16 - Loading configuration from /home/fritz/Desktop/Acme-Frobnitz-Snapshot/bin/../conf/app_config.json...
+2024-12-19 02:14:20 - Docker image 'my_dl:latest' does not exist. Building the image...
+2024-12-19 02:51:58 - Running Docker with the specified volume and config path...
+2024-12-19 02:52:48 - Captured Docker stdout: Adding lib_path to sys.path: /app/bin/../lib/python_utils
+2024-12-19 02:52:48 - Captured Docker stderr: 2024-12-19 09:52:39,464 - __main__ - INFO - Verifying directory: /media/fritz/E4B0-3FC2/2024-12-19
+2024-12-19 09:52:39,528 - __main__ - ERROR - Directory not found: /media/fritz/E4B0-3FC2/2024-12-19
+2024-12-19 16:05:13 - Detected OS: Linux
+2024-12-19 16:05:13 - Ensuring Docker is running...
+2024-12-19 16:05:13 - Docker is already running.
+2024-12-19 16:05:13 - Loading configuration from /home/fritz/Desktop/Acme-Frobnitz-Snapshot/bin/../conf/app_config.json...
+2024-12-19 16:05:17 - Docker image 'my_dl:latest' found.
+2024-12-19 16:05:17 - Running Docker with the specified volume and config path...
+2024-12-19 16:05:36 - Captured Docker stdout: Adding lib_path to sys.path: /app/bin/../lib/python_utils
+2024-12-19 16:05:36 - Captured Docker stderr: 2024-12-19 23:05:32,696 - __main__ - INFO - Verifying directory: /media/fritz/E4B0-3FC2/2024-12-19
+2024-12-19 23:05:32,697 - __main__ - ERROR - Directory not found: /media/fritz/E4B0-3FC2/2024-12-19
+2024-12-19 17:56:39 - Detected OS: Linux
+2024-12-19 17:56:39 - Ensuring Docker is running...
+2024-12-19 17:56:40 - Docker is already running.
+2024-12-19 17:56:40 - Loading configuration from /home/fritz/Desktop/Acme-Frobnitz-Snapshot/bin/../conf/app_config.json...
+2024-12-19 17:56:46 - Docker image 'my_dl:latest' found.
+2024-12-19 17:56:46 - Running Docker with the specified volume and config path...
+2024-12-19 17:57:24 - Captured Docker stdout: Adding lib_path to sys.path: /app/bin/../lib/python_utils
+2024-12-19 17:57:24 - Captured Docker stderr: 2024-12-20 00:57:19,150 - __main__ - INFO - Verifying directory: /media/fritz/E4B0-3FC2/2024-12-20
+2024-12-20 00:57:19,170 - __main__ - ERROR - Directory not found: /media/fritz/E4B0-3FC2/2024-12-20
+2024-12-19 18:04:45 - Detected OS: Linux
+2024-12-19 18:04:45 - Ensuring Docker is running...
+2024-12-19 18:04:45 - Docker is already running.
+2024-12-19 18:04:45 - Loading configuration from /home/fritz/Desktop/Acme-Frobnitz-Snapshot/bin/../conf/app_config.json...
+2024-12-19 18:04:45 - Docker image 'my_dl:latest' found.
+2024-12-19 18:04:45 - Running Docker with the specified volume and config path...
+2024-12-19 18:04:50 - Captured Docker stdout: Adding lib_path to sys.path: /app/bin/../lib/python_utils
+2024-12-19 18:04:50 - Captured Docker stderr: 2024-12-20 01:04:48,375 - __main__ - INFO - Verifying directory: /media/fritz/E4B0-3FC2/2024-12-20
+2024-12-20 01:04:48,375 - __main__ - ERROR - Directory not found: /media/fritz/E4B0-3FC2/2024-12-20

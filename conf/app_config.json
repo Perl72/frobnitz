@@ -10,7 +10,9 @@
         "log_to_file": true,
         "log_filename": "./dl.log"
     },
-    "target_usb_mount": "E4B0-3FC2/",
+    "target_usb_mount": "/media/fritz/E4B0-3FC2",
+    "git_token": "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",
+    "git_user": "Perl72",
     "watermark_config": {
         "font": "Arial Bold",
         "font_size": 64,

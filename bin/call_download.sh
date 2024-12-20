@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -x
+set -x
 
 # Get the directory of the current script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -65,37 +65,6 @@ if [ ! -f "$Config_Path" ]; then
     exit 1
 fi
 
-# Parse config using jq
-usb_mount_name=$(jq -r '.target_usb_mount' "$Config_Path" | sed 's:/$::')  # Remove trailing slash if present
-log_message "Target USB mount name from config: $usb_mount_name"
-
-# Locate the USB volume dynamically
-if [[ "$OS_TYPE" == "Darwin" ]]; then
-    usb_mount_point=$(ls /Volumes | grep -i "$usb_mount_name" | head -n 1)
-    if [ -z "$usb_mount_point" ]; then
-        log_message "Error: Unable to locate the volume '$usb_mount_name'. Available volumes: $(ls /Volumes)"
-        exit 1
-    fi
-    usb_mount_point="/Volumes/$usb_mount_point"
-else
-    usb_mount_point="/media/$USER/$usb_mount_name"
-fi
-
-log_message "Detected USB mount point: $usb_mount_point"
-
-# Validate USB mount
-if [ ! -d "$usb_mount_point" ]; then
-    log_message "Error: Volume '$usb_mount_point' is not mounted. Please mount the volume and try again."
-    exit 1
-fi
-
-# Create download directory
-download_date=$(date +%Y-%m-%d)
-download_path="$usb_mount_point/$download_date/"
-log_message "Attempting to create directory: $download_path"
-mkdir -p "$download_path" || { log_message "Error creating download directory: $download_path"; exit 1; }
-log_message "Directory created or already exists: $download_path"
-
 # Check if the Docker image exists
 if [[ "$(docker images -q my_dl:latest 2> /dev/null)" == "" ]]; then
     log_message "Docker image 'my_dl:latest' does not exist. Building the image..."
@@ -104,19 +73,24 @@ else
     log_message "Docker image 'my_dl:latest' found."
 fi
 
+echo "DOCKER"
 # Run Docker to download the video
 log_message "Running Docker with the specified volume and config path..."
 original_filename=$(docker run --rm \
   -e PYTHONPATH="/app/lib/python_utils:/app/lib" \
   -v "$Config_Path":/app/conf/app_config.json \
   -v "$usb_mount_point":"$usb_mount_point" \
-  my_dl python3 /app/bin/call_download.py "$1" 2>/dev/null  | tail -n 1)
- 
-# Remove trailing whitespace or newlines
-original_filename=$(echo "$original_filename" | sed 's/\s*$//')
+  my_dl python3 /app/bin/call_download.py "$1" 2>stderr.log | tail -n 1)
 
-# Sleep to allow for any file system updates
-sleep 1
+# Trim any extra whitespace or newlines
+original_filename=$(echo "$original_filename" | sed 's/^\s*//;s/\s*$//')
+
+# Debug: Log outputs
+log_message "Captured Docker stdout: $original_filename"
+log_message "Captured Docker stderr: $(cat stderr.log)"
+
+# Sleep to allow file system updates (if needed)
+sleep 3
 
 # Validate the original filename
 if [ -z "$original_filename" ] || [[ "$original_filename" == *"Error"* ]]; then
@@ -124,8 +98,6 @@ if [ -z "$original_filename" ] || [[ "$original_filename" == *"Error"* ]]; then
   exit 1
 fi
 
+# Print only the filename as the final output
+echo "$original_filename"
 
-# Log success
-log_message "File validation successful: $original_filename"
-
-exit 0
