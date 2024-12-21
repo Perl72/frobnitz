@@ -1,0 +1,75 @@
+2024-12-20 01:19:36,025 - __main__ - INFO - Watermarking script started.
+2024-12-20 01:19:36,025 - __main__ - INFO - Processing video file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_4.mp4
+2024-12-20 01:19:36,026 - __main__ - INFO - Looking for metadata file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_4.json
+2024-12-20 01:19:36,026 - __main__ - INFO - Loaded metadata from: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_4.json
+2024-12-20 01:19:36,026 - __main__ - DEBUG - Final watermarking parameters: {'input_video_path': '/media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_4.mp4', 'download_path': '/media/fritz/E4B0-3FC2/2024-12-20', 'username': 'Tim Ballard', 'video_date': '2024-12-20', 'font': 'Arial-Bold', 'font_size': 48, 'username_color': 'yellow', 'date_color': 'cyan', 'timestamp_color': 'red', 'username_position': ('left', 'top'), 'date_position': ('left', 'bottom'), 'timestamp_position': ('right', 'bottom')}
+2024-12-20 01:19:36,026 - __main__ - INFO - Starting watermarking process...
+2024-12-20 01:19:36,026 - __main__ - ERROR - An unexpected error occurred: name 'add_watermark' is not defined
+2024-12-20 01:19:36,027 - __main__ - DEBUG - Traceback (most recent call last):
+  File "/home/fritz/Desktop/Acme/frobnitz-main/bin/call_watermark.py", line 111, in <module>
+    result = add_watermark(params)
+NameError: name 'add_watermark' is not defined
+
+2024-12-20 01:29:31,253 - __main__ - ERROR - Failed to import add_watermark: No module named 'watermarker2'
+2024-12-20 01:34:04,592 - __main__ - INFO - Added library path: /home/fritz/Desktop/Acme/frobnitz-main/lib/python_utils
+2024-12-20 01:34:04,769 - __main__ - INFO - Watermarking script started.
+2024-12-20 01:34:04,770 - __main__ - INFO - Processing video file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_6.mp4
+2024-12-20 01:34:04,770 - __main__ - INFO - Looking for metadata file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_6.json
+2024-12-20 01:34:04,770 - __main__ - INFO - Loaded metadata from: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_6.json
+2024-12-20 01:34:04,770 - __main__ - ERROR - An unexpected error occurred: module 'datetime' has no attribute 'now'
+2024-12-20 01:34:04,771 - __main__ - DEBUG - Traceback (most recent call last):
+  File "/home/fritz/Desktop/Acme/frobnitz-main/bin/call_watermark.py", line 102, in <module>
+    video_date = metadata.get("video_date", datetime.now().strftime("%Y-%m-%d"))
+AttributeError: module 'datetime' has no attribute 'now'
+
+2024-12-20 01:36:51,180 - __main__ - INFO - Added library path: /home/fritz/Desktop/Acme/frobnitz-main/lib/python_utils
+2024-12-20 01:36:51,382 - __main__ - INFO - Watermarking script started.
+2024-12-20 01:36:51,382 - __main__ - INFO - Processing video file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_7.mp4
+2024-12-20 01:36:51,383 - __main__ - INFO - Looking for metadata file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_7.json
+2024-12-20 01:36:51,383 - __main__ - INFO - Loaded metadata from: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_7.json
+2024-12-20 01:36:51,383 - __main__ - ERROR - An unexpected error occurred: module 'datetime' has no attribute 'now'
+2024-12-20 01:36:51,384 - __main__ - DEBUG - Traceback (most recent call last):
+  File "/home/fritz/Desktop/Acme/frobnitz-main/bin/call_watermark.py", line 100, in <module>
+    metadata = read_json_metadata(input_video_path)
+  File "/home/fritz/Desktop/Acme/frobnitz-main/bin/call_watermark.py", line 71, in read_json_metadata
+    "video_date": data.get("upload_date", datetime.now().strftime("%Y-%m-%d"))
+AttributeError: module 'datetime' has no attribute 'now'
+
+2024-12-20 01:41:21,178 - __main__ - INFO - Added library path: /home/fritz/Desktop/Acme/frobnitz-main/lib/python_utils
+2024-12-20 01:41:21,381 - __main__ - INFO - Watermarking script started.
+2024-12-20 01:41:21,381 - __main__ - INFO - Processing video file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_8.mp4
+2024-12-20 01:41:21,381 - __main__ - INFO - Looking for metadata file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_8.json
+2024-12-20 01:41:21,382 - __main__ - INFO - Loaded metadata from: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_8.json
+2024-12-20 01:41:21,382 - __main__ - ERROR - An unexpected error occurred: module 'datetime' has no attribute 'now'
+2024-12-20 01:41:21,382 - __main__ - DEBUG - Traceback (most recent call last):
+  File "/home/fritz/Desktop/Acme/frobnitz-main/bin/call_watermark.py", line 93, in <module>
+    metadata = read_json_metadata(input_video_path)
+  File "/home/fritz/Desktop/Acme/frobnitz-main/bin/call_watermark.py", line 71, in read_json_metadata
+    "video_date": data.get("upload_date", datetime.now().strftime("%Y-%m-%d"))
+AttributeError: module 'datetime' has no attribute 'now'
+
+2024-12-20 01:43:06,062 - __main__ - INFO - Added library path: /home/fritz/Desktop/Acme/frobnitz-main/lib/python_utils
+2024-12-20 01:43:06,259 - __main__ - INFO - Watermarking script started.
+2024-12-20 01:43:06,260 - __main__ - INFO - Processing video file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_9.mp4
+2024-12-20 01:43:06,260 - __main__ - INFO - Looking for metadata file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_9.json
+2024-12-20 01:43:06,260 - __main__ - INFO - Loaded metadata from: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_9.json
+2024-12-20 01:43:06,260 - __main__ - ERROR - An unexpected error occurred: module 'datetime' has no attribute 'now'
+2024-12-20 01:43:06,261 - __main__ - DEBUG - Traceback (most recent call last):
+  File "/home/fritz/Desktop/Acme/frobnitz-main/bin/call_watermark.py", line 95, in <module>
+    video_date = metadata.get("video_date", datetime.now().strftime("%Y-%m-%d"))
+AttributeError: module 'datetime' has no attribute 'now'
+
+2024-12-20 01:45:52,532 - __main__ - INFO - Added library path: /home/fritz/Desktop/Acme/frobnitz-main/lib/python_utils
+2024-12-20 01:45:52,773 - __main__ - INFO - Watermarking script started.
+2024-12-20 01:45:52,773 - __main__ - INFO - Processing video file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_10.mp4
+2024-12-20 01:45:52,773 - __main__ - INFO - Looking for metadata file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_10.json
+2024-12-20 01:45:52,774 - __main__ - INFO - Loaded metadata from: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_10.json
+2024-12-20 01:45:52,774 - __main__ - INFO - Starting watermarking process...
+2024-12-20 01:58:25,665 - __main__ - INFO - Watermarked video created successfully: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_10_watermarked.mp4
+2024-12-20 02:06:11,815 - __main__ - INFO - Added library path: /home/fritz/Desktop/Acme/frobnitz-main/lib/python_utils
+2024-12-20 02:06:13,979 - __main__ - INFO - Watermarking script started.
+2024-12-20 02:06:13,979 - __main__ - INFO - Processing video file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_11.mp4
+2024-12-20 02:06:13,979 - __main__ - INFO - Looking for metadata file: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_11.json
+2024-12-20 02:06:13,980 - __main__ - INFO - Loaded metadata from: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_11.json
+2024-12-20 02:06:13,980 - __main__ - INFO - Starting watermarking process...
+2024-12-20 02:18:45,138 - __main__ - INFO - Watermarked video created successfully: /media/fritz/E4B0-3FC2/2024-12-20/Tim_Ballard_20241211_11_watermarked.mp4
