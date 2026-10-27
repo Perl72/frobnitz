@@ -5,6 +5,7 @@
 
 import yt_dlp
 import requests
+import glob
 import os
 import json
 import traceback
@@ -79,6 +80,8 @@ def extract_metadata(params):
             ),
             "noplaylist": True,  # Ensure only the single video is processed if the URL is a playlist
             "skip_download": True,  # Skip actual video download
+            "quiet": True,  # Keep stdout reserved for the final filename
+            "no_warnings": True,
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -261,6 +264,9 @@ def download_video(params):
             "format": video_download_config.get("format", "bestvideo+bestaudio/best"),
             "noplaylist": video_download_config.get("noplaylist", True),
             "verbose": True,
+            "quiet": True,  # Keep stdout reserved for the final filename
+            "no_warnings": True,
+            "noprogress": True,
         }
 
         logger.debug(f"yt-dlp options: {ydl_opts}")
@@ -268,14 +274,35 @@ def download_video(params):
         # Perform the video download
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             logger.info("About to download video.")
-            ydl.download([url])
+            info = ydl.extract_info(url, download=True)
             logger.info("Video download completed.")
+
+        # Find the file yt-dlp actually wrote (merging can change the extension)
+        actual_path = None
+        for download in (info or {}).get("requested_downloads") or []:
+            candidate = download.get("filepath")
+            if candidate and os.path.exists(candidate):
+                actual_path = candidate
+                break
+
+        if not actual_path:
+            base = os.path.splitext(params["original_filename"])[0]
+            matches = [
+                p
+                for p in glob.glob(base + ".*")
+                if not p.endswith((".part", ".ytdl", ".json"))
+            ]
+            if matches:
+                actual_path = max(matches, key=os.path.getmtime)
+
+        if actual_path:
+            params["original_filename"] = actual_path
 
         end_time = time.time()
         logger.info(f"Download completed in {end_time - start_time:.2f} seconds")
         #save params
         #save_params_to_json(params)
-        return {"to_process": params["original_filename"]}
+        return {"to_process": params["original_filename"], "original_filename": params["original_filename"]}
     except Exception as e:
         logger.error(f"Failed to download video: {e}")
         logger.debug(traceback.format_exc())

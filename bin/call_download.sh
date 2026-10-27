@@ -1,103 +1,58 @@
 #!/bin/bash
-set -x
+set -uo pipefail
 
-# Get the directory of the current script
+# Resolve the repo root from this script's location
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-# Define local log directory and log file path
-LOCAL_LOG_DIR="$SCRIPT_DIR/../logs"
+# Local log file
+LOCAL_LOG_DIR="$REPO_DIR/logs"
 LOCAL_LOG_FILE="$LOCAL_LOG_DIR/bash_wrapper.log"
+mkdir -p "$LOCAL_LOG_DIR" || { echo "Error creating log directory: $LOCAL_LOG_DIR" >&2; exit 1; }
 
-# Ensure the local log directory exists
-mkdir -p "$LOCAL_LOG_DIR" || { echo "Error creating log directory: $LOCAL_LOG_DIR"; exit 1; }
-
-# Function to log messages
+# Log to the file and to stderr only (stdout is reserved for the filename)
 log_message() {
-    echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOCAL_LOG_FILE"
+    echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOCAL_LOG_FILE" >&2
 }
 
-# Detect the operating system
-OS_TYPE=$(uname)
-log_message "Detected OS: $OS_TYPE"
+if [ "$#" -lt 1 ]; then
+    log_message "Error: no URL provided."
+    exit 2
+fi
 
-# Function to start Docker if it's not running
-start_docker() {
-    log_message "Ensuring Docker is running..."
-    if [[ "$OS_TYPE" == "Linux" ]]; then
-        # Linux-specific logic
-        if ! systemctl is-active --quiet docker; then
-            log_message "Docker is not running. Starting Docker..."
-            sudo systemctl start docker
-            if [ $? -ne 0 ]; then
-                log_message "Error: Failed to start Docker. Please start it manually."
-                exit 1
-            fi
-        else
-            log_message "Docker is already running."
-        fi
-    elif [[ "$OS_TYPE" == "Darwin" ]]; then
-        # macOS-specific logic
-        if ! pgrep -f "Docker.app" >/dev/null; then
-            log_message "Docker is not running. Attempting to start Docker..."
-            open -a Docker
-            log_message "Waiting for Docker to start..."
-            while ! docker info >/dev/null 2>&1; do
-                sleep 1
-            done
-            log_message "Docker started successfully."
-        else
-            log_message "Docker is already running."
-        fi
-    else
-        log_message "Unsupported operating system: $OS_TYPE"
-        exit 1
-    fi
-}
-
-# Start Docker
-start_docker
-
-# Load Configuration
-Config_Path="$SCRIPT_DIR/../conf/app_config.json"
+Config_Path="${FROBNITZ_CONFIG:-$REPO_DIR/conf/app_config.json}"
 log_message "Loading configuration from $Config_Path..."
 if [ ! -f "$Config_Path" ]; then
     log_message "Error: Config file '$Config_Path' not found. Please verify the path and try again."
     exit 1
 fi
 
-# Check if the Docker image exists
-if [[ "$(docker images -q my_dl:latest 2> /dev/null)" == "" ]]; then
-    log_message "Docker image 'my_dl:latest' does not exist. Building the image..."
-    docker build -f "$SCRIPT_DIR/../Dockerfile" -t my_dl "$SCRIPT_DIR/.."
-else
-    log_message "Docker image 'my_dl:latest' found."
+# Docker is optional. Set FROBNITZ_USE_DOCKER=1 to use the container path.
+if [ "${FROBNITZ_USE_DOCKER:-0}" = "1" ] && command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
+    log_message "Using Docker."
+    if [ -z "$(docker images -q my_dl:latest 2>/dev/null)" ]; then
+        log_message "Docker image 'my_dl:latest' does not exist. Building the image..."
+        docker build -f "$REPO_DIR/Dockerfile" -t my_dl "$REPO_DIR" || { log_message "Docker build failed."; exit 1; }
+    fi
+    log_message "Running Docker with the specified volume and config path..."
+    docker run --rm \
+      -e PYTHONPATH="/app/lib/python_utils:/app/lib" \
+      -e FROBNITZ_CONFIG=/app/conf/app_config.json \
+      -e FROBNITZ_DOWNLOAD_ROOT=/data \
+      -v "$Config_Path":/app/conf/app_config.json:ro \
+      -v "${FROBNITZ_DOWNLOAD_ROOT:-$HOME}":/data \
+      my_dl python3 /app/bin/call_download.py "$1"
+    exit $?
 fi
 
-echo "DOCKER"
-# Run Docker to download the video
-log_message "Running Docker with the specified volume and config path..."
-original_filename=$(docker run --rm \
-  -e PYTHONPATH="/app/lib/python_utils:/app/lib" \
-  -v "$Config_Path":/app/conf/app_config.json \
-  -v "$usb_mount_point":"$usb_mount_point" \
-  my_dl python3 /app/bin/call_download.py "$1" 2>stderr.log | tail -n 1)
-
-# Trim any extra whitespace or newlines
-original_filename=$(echo "$original_filename" | sed 's/^\s*//;s/\s*$//')
-
-# Debug: Log outputs
-log_message "Captured Docker stdout: $original_filename"
-log_message "Captured Docker stderr: $(cat stderr.log)"
-
-# Sleep to allow file system updates (if needed)
-sleep 3
-
-# Validate the original filename
-if [ -z "$original_filename" ] || [[ "$original_filename" == *"Error"* ]]; then
-  log_message "Error: original_filename is not set or invalid."
-  exit 1
+# Native fallback: run the Python downloader directly (no daemon needed).
+PY="${FROBNITZ_PYTHON:-}"
+if [ -z "$PY" ] && [ -x "$HOME/.venvs/frobnitz/bin/python" ]; then
+    PY="$HOME/.venvs/frobnitz/bin/python"
 fi
+PY="${PY:-python3}"
+log_message "Using native Python: $PY"
 
-# Print only the filename as the final output
-echo "$original_filename"
-
+cd "$REPO_DIR" || exit 1
+export PYTHONPATH="$REPO_DIR/lib/python_utils:$REPO_DIR/lib${PYTHONPATH:+:$PYTHONPATH}"
+exec "$PY" "$REPO_DIR/bin/call_download.py" "$1"

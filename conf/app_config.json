@@ -3,16 +3,17 @@
         "format": "bestvideo[height<=?1080]+bestaudio/best",
         "bitrate": "5000k",
         "noplaylist": true,
-        "cookie_path": "/app/data/cookies.txt"
+        "cookie_path": null
     },
     "logging": {
         "level": "DEBUG",
         "log_to_file": true,
-        "log_filename": "./dl.log"
+        "log_filename": "logs/dl.log"
     },
-    "target_usb_mount": "/media/fritz/E4B0-3FC2",
+    "target_usb_mount": "/home/perl/Downloads/frobnitz",
+    "user_id": "perl",
     "watermark_config": {
-        "font": "Arial Bold",
+        "font": "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
         "font_size": 64,
         "username_color": "yellow",
         "date_color": "cyan",
@@ -30,7 +31,7 @@
         "max_char_width": 65,
         "next_line": 1.7,
         "pause_between_para": 2,
-        "source_path": "/app/data/4.source.txt",
+        "source_path": "/home/perl/repos/frobnitz/data/4.source.txt",
         "shadow": {
             "color": "black",
             "offset": 5,
@@ -38,4 +39,3 @@
         }
     }
 }
-

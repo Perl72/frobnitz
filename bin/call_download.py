@@ -1,6 +1,7 @@
 import sys
 import os
 import json
+import glob
 import logging
 import traceback
 from datetime import datetime
@@ -16,15 +17,12 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(messag
 console_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 
-# Add `lib/python_utils` directory to Python path with an absolute path
-python_utils_path = "/app/lib/python_utils"
-sys.path.append(python_utils_path)
-
-# Add debugging info
+# Resolve paths from this file, so the script works from any working directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
-lib_path = os.path.join(current_dir, "../lib/python_utils")
-print(f"Adding lib_path to sys.path: {lib_path}")
-sys.path.append(lib_path)
+repo_root = os.path.dirname(current_dir)
+lib_path = os.path.join(repo_root, "lib", "python_utils")
+if lib_path not in sys.path:
+    sys.path.insert(0, lib_path)
 
 # Attempt to import modules
 try:
@@ -35,7 +33,9 @@ except ImportError as e:
     sys.exit(1)
 
 # Load Config
-config_file = "./conf/app_config.json"
+config_file = os.environ.get(
+    "FROBNITZ_CONFIG", os.path.join(repo_root, "conf", "app_config.json")
+)
 
 try:
     with open(config_file, "r") as file:
@@ -44,12 +44,20 @@ except FileNotFoundError:
     logger.error(f"Error: Configuration file '{config_file}' not found.")
     sys.exit(1)
 
-# Correctly setting the download path
+# Download root: env override, then config target, then a repo-local data/ dir
 download_date = datetime.now().strftime("%Y-%m-%d")
-config["download_path"] = os.path.abspath(os.path.join(config["target_usb_mount"], download_date))
+download_root = (
+    os.environ.get("FROBNITZ_DOWNLOAD_ROOT")
+    or config.get("target_usb_mount")
+    or os.path.join(repo_root, "data")
+)
+download_path = os.path.abspath(os.path.join(download_root, download_date))
+config["download_path"] = download_path
 
-# Ensure the directory for the log file exists
-log_file = os.path.expanduser(config["logging"]["log_filename"])
+# Ensure the directory for the log file exists (relative paths resolve to the repo)
+log_file = os.path.expanduser(config.get("logging", {}).get("log_filename", "./dl.log"))
+if not os.path.isabs(log_file):
+    log_file = os.path.join(repo_root, log_file)
 log_dir = os.path.dirname(log_file)
 
 if not os.path.exists(log_dir):
@@ -59,23 +67,32 @@ if not os.path.exists(log_dir):
         logger.error(f"Error creating log directory '{log_dir}': {e}")
         sys.exit(1)
 
-# Ensure the download directory exists
+# Ensure the download directory exists; fall back to the repo data/ dir if not
 try:
-    os.makedirs(config["download_path"], exist_ok=True)
-    logger.info(f"Download directory created or exists: {config['download_path']}")
+    os.makedirs(download_path, exist_ok=True)
+    logger.info(f"Download directory created or exists: {download_path}")
 except Exception as e:
-    logger.error(f"Failed to create directory: {config['download_path']}, Error: {e}")
-    sys.exit(1)
+    fallback_path = os.path.abspath(os.path.join(repo_root, "data", download_date))
+    logger.warning(
+        f"Cannot use download root '{download_root}' ({e}); falling back to {fallback_path}"
+    )
+    os.makedirs(fallback_path, exist_ok=True)
+    download_path = fallback_path
+    config["download_path"] = download_path
 
 # Main Function
 def main():
+    video_download = dict(config.get("video_download", {}))
+    cookie_path = config.get("cookie_path") or video_download.get("cookie_path")
+    if cookie_path and not os.path.exists(os.path.expanduser(cookie_path)):
+        cookie_path = None
+    video_download["cookie_path"] = cookie_path
+
     params = {
         "download_path": config["download_path"],
-        "cookie_path": (
-            config.get("cookie_path")
-            if os.path.exists(os.path.expanduser(config.get("cookie_path", "")))
-            else None
-        ),
+        "cookie_path": cookie_path,
+        "video_download": video_download,
+        "logging": config.get("logging", {}),
         "url": None,
         **config.get("watermark_config", {}),
     }
@@ -105,16 +122,26 @@ def main():
             logger.error(f"Error executing {func.__name__}: {e}")
             logger.debug(traceback.format_exc())
 
-    # Return the original filename
+    # Return the filename of the file that actually exists on disk
     original_filename = params.get("original_filename", "")
-    if original_filename:
+    if original_filename and not os.path.exists(original_filename):
+        base = os.path.splitext(original_filename)[0]
+        matches = [
+            p
+            for p in glob.glob(base + ".*")
+            if not p.endswith((".part", ".ytdl", ".json"))
+        ]
+        if matches:
+            original_filename = max(matches, key=os.path.getmtime)
+            params["original_filename"] = original_filename
+
+    if original_filename and os.path.exists(original_filename):
         logger.info(f"Returning original filename: {original_filename}")
         print(original_filename)  # Output only the original filename
         return original_filename
-    else:
-        logger.warning("No original filename to return.")
-        return None
+
+    logger.warning("No downloaded file to return.")
+    return None
 
 if __name__ == "__main__":
     main()
-
